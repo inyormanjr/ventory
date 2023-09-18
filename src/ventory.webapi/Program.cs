@@ -31,3 +31,7 @@ app.Run();
 //a: check the indentation of the yml file
 //q: it says services.postgres Additional property port is not allowed
 //a: check the indentation of the yml file
+
+
+//q: docker cheat sheet
+//a: https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf

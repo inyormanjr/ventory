@@ -20,5 +20,11 @@ namespace ventory.infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //apply all configuration by assembly
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(VentoryDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace ventory.infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("ventory.domain.Entities.UserAgg.User", b =>
@@ -88,7 +88,7 @@ namespace ventory.infrastructure.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ventory.domain.Entities.UserAgg.UserRole", b =>
@@ -107,7 +107,7 @@ namespace ventory.infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("ventory.domain.Entities.UserAgg.User", b =>

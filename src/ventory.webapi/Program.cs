@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using ventory.infrastructure.Data;
+using ventory.webapi.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -24,14 +29,5 @@ app.MapControllers();
 
 app.Run();
 
-
-//q: how to run docker-compose.yml
-//a: docker-compose up -d
-//q: it says services.port must be a mapping
-//a: check the indentation of the yml file
-//q: it says services.postgres Additional property port is not allowed
-//a: check the indentation of the yml file
-
-
-//q: docker cheat sheet
-//a: https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf
+//q: update database migration command
+//a: dotnet ef database update --project src/ventory.infrastructure --startup-project src/ventory.webapi --context VentoryDbContext

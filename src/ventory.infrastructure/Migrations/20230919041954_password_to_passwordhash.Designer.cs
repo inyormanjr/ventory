@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ventory.infrastructure.Data;
@@ -11,9 +12,11 @@ using ventory.infrastructure.Data;
 namespace ventory.infrastructure.Migrations
 {
     [DbContext(typeof(VentoryDbContext))]
-    partial class VentoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230919041954_password_to_passwordhash")]
+    partial class password_to_passwordhash
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

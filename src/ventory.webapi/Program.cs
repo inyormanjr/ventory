@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ventory.application.Services.Users;
 using ventory.infrastructure.Data;
 using ventory.webapi.Extensions;
 
@@ -29,5 +30,3 @@ app.MapControllers();
 
 app.Run();
 
-//q: update database migration command
-//a: dotnet ef database update --project src/ventory.infrastructure --startup-project src/ventory.webapi --context VentoryDbContext

@@ -8,14 +8,17 @@ using ventory.application.models;
 using ventory.infrastructure.Data;
 using ventory.domain.Entities.UserAgg;
 using ventory.domain.Entities.CompanyAgg;
+using Microsoft.AspNetCore.Identity;
 namespace ventory.application.Services.Users
 {
     public class UserService : IUserService
     {
         private readonly VentoryDbContext ventoryDbContext;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserService(VentoryDbContext ventoryDbContext)
+        public UserService(VentoryDbContext ventoryDbContext, IPasswordHasher<User> passwordHasher)
         {
+            this._passwordHasher = passwordHasher;
             this.ventoryDbContext = ventoryDbContext;
         }
         public async  Task<bool> RegisterUserAsync(NewUserModel newUserModel)
@@ -30,7 +33,7 @@ namespace ventory.application.Services.Users
                 FirstName = newUserModel.FirstName,
                 LastName = newUserModel.LastName,
                 Email = newUserModel.Email,
-                Password = newUserModel.Password,
+                PasswordHash = hashPassword(newUserModel.Password),
                 Company = new Company
                 {
                     Name = newUserModel.CompanyName
@@ -44,6 +47,16 @@ namespace ventory.application.Services.Users
         private async Task<bool> isEmailUniqueAsync(string email)
         {
             return  await ventoryDbContext.Users.AnyAsync(x => x.Email == email);
+        }
+
+        private string hashPassword(string password)
+        {
+            return _passwordHasher.HashPassword(null,password);
+        }
+
+        private PasswordVerificationResult verifyPassword(string hashedPassword, string providedPassword)
+        {
+            return _passwordHasher.VerifyHashedPassword(null,hashedPassword,providedPassword);
         }
 
         public async Task<bool> DeleteUserAsync(Guid userId)

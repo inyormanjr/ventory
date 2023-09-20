@@ -14,6 +14,9 @@ namespace ventory.application.Services.Users
 
         public Task<bool> IsEmailUniqueAsync(string email);
 
+        //impelement login
+        public Task<UserResponseModel> LoginUserAsync(LoginModel loginModel);
+
         public Task<bool> DeleteUserAsync(Guid userId);
 
 

@@ -11,6 +11,11 @@ namespace ventory.application.Exceptions
         {
             
         }
-        
+
+        public UserNotFoundException(string email) : base($"User with email {email} was not found")
+        {
+
+        }
+
     }
 }

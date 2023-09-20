@@ -43,6 +43,8 @@ namespace ventory.application.Services.Users
             return await ventoryDbContext.SaveChangesAsync() > 0;
         }
 
+    
+
 
         private async Task<bool> isEmailUniqueAsync(string email)
         {
@@ -74,6 +76,32 @@ namespace ventory.application.Services.Users
         public async Task<bool> IsEmailUniqueAsync(string email)
         {
             return await isEmailUniqueAsync(email);   
+        }
+        // implement login method
+
+        public async Task<UserResponseModel> LoginUserAsync(LoginModel loginModel)
+        {
+            //login logic
+            var user = await ventoryDbContext.Users.Include(x=> x.Company).FirstOrDefaultAsync(x => x.Email == loginModel.Email);
+            if (user == null)
+            {
+                throw new UserNotFoundException(loginModel.Email);
+            }
+
+            var passwordVerificationResult = verifyPassword(user.PasswordHash, loginModel.Password);
+            if (passwordVerificationResult == PasswordVerificationResult.Failed)
+            {
+                throw new InvalidPasswordException();
+            }
+            
+            return new UserResponseModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                CompanyName = user.Company.Name,
+                Email = user.Email
+            };
         }
     }
 }

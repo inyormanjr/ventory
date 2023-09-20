@@ -27,7 +27,7 @@ namespace ventory.webapi.Controllers
         {
             if (await _userService.RegisterUserAsync(newUserModel))
             {
-                return Ok();
+                return StatusCode(201);
             }
             return BadRequest();
         }
@@ -39,11 +39,16 @@ namespace ventory.webapi.Controllers
             var userResponseModel = await _userService.LoginUserAsync(loginModel);
             if (userResponseModel == null)
             {
-                return Unauthorized();
+                return Unauthorized("Invalid Credentials");
             }
 
             var token = JWTHelper.CreateToken(userResponseModel, configuration);
-            return Ok(token);
+            var response = new {
+                token = token,
+                user = userResponseModel
+            };
+           
+            return Ok(response);
         }
     }
 }
